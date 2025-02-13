@@ -21,48 +21,64 @@
             color: #d81b60;
             margin-top: 20px;
         }
+
+        /* Fixed Frame Size */
+        .carousel-container {
+            width: 800px;
+            height: 450px;
+            margin: auto;
+            border: 10px solid #ff77b5;
+            border-radius: 20px;
+            padding: 15px;
+            background-color: #fff0f6;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        /* Image Styling - Scale Down to Fit the Frame */
         .carousel-item img {
-            width: 80%;
-            height: auto;
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Ensures the entire image fits within the frame */
             border-radius: 15px;
             box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
         }
-        .carousel-container {
-            max-width: 800px;
-            margin: auto;
+
+        /* Faster transition */
+        .carousel-item {
+            transition: transform 0.5s ease;
         }
+
         audio {
             margin-top: 20px;
+        }
+
+        /* Custom Button Styling */
+        .play-music-btn {
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            color: white;
+            font-size: 18px;
+            font-family: 'Dancing Script', cursive;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .play-music-btn:hover {
+            background: linear-gradient(135deg, #ff5f6d, #ff99ac);
+            transform: scale(1.1);
         }
     </style>
 </head>
 
 <!-- Audio Element -->
-<audio id="romanticMusic" src="/music/romantic-music.mp3" loop></audio>
+<audio id="romanticMusic" src="/music/romantic-music.mp3" loop autoplay></audio>
 
 <!-- Play Button -->
 <button id="playMusicBtn" class="play-music-btn">🎶 Play Music</button>
-
-<!-- CSS for Styling -->
-<style>
-    .play-music-btn {
-        background: linear-gradient(135deg, #ff758c, #ff7eb3);
-        color: white;
-        font-size: 18px;
-        font-family: 'Dancing Script', cursive;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 30px;
-        cursor: pointer;
-        transition: all 0.3s ease-in-out;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
-    
-    .play-music-btn:hover {
-        background: linear-gradient(135deg, #ff5f6d, #ff99ac);
-        transform: scale(1.1);
-    }
-</style>
 
 <!-- JavaScript for Play/Pause Toggle -->
 <script>
@@ -81,7 +97,7 @@
 <body>
     <h1>Our Beautiful Memories 📸</h1>
     
-    <div id="memoryCarousel" class="carousel slide carousel-container" data-bs-ride="carousel">
+    <div id="memoryCarousel" class="carousel slide carousel-container" data-bs-ride="carousel" data-bs-interval="3000">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img src="/images/pic1.jpg" class="d-block mx-auto" alt="Memory 1">
@@ -121,12 +137,11 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
         </button>
     </div>
-    
-    
 </body>
+
 @extends('layouts.app')
 
 @section('content')
-    
+
 @endsection
 </html>

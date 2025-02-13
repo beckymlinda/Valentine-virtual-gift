@@ -28,17 +28,22 @@
                 let formData = new FormData(document.getElementById('quiz-form'));
                 let score = 0;
                 
+                // Check answers
                 for (let key in correctAnswers) {
                     if (formData.get(key) === correctAnswers[key]) {
                         score++;
                     }
                 }
 
+                // Add a fallback if the name is not provided
+                let name = formData.get("name") || "Anonymous";
+
                 fetch('/quiz-submit', {
                     method: 'POST',
                     body: formData,
                     headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json'  // Make sure server returns JSON response
                     }
                 })
                 .then(response => response.json())
@@ -155,36 +160,39 @@
             }
         }
     </style>
-     @extends('layouts.app')
-
-     @section('content')
-         
-     @endsection
 </head>
 <body>
 
-    <h1>How Well Do You Know Me? 💕</h1>
-    <form id="quiz-form">
+    @extends('layouts.app')
+
+    @section('content')
+        <h1>How Well Do You Know Me? 💕</h1>
         
-        <label>Where did we first meet?</label>
-        <input type="radio" name="q1" value="Place A" required> Place A<br>
-        <input type="radio" name="q1" value="Place B"> Place B<br>
-        <input type="radio" name="q1" value="Place C"> Place C<br>
+        <!-- Name field added here -->
+        <form id="quiz-form">
+            <label for="name">Your Name:</label>
+            <input type="text" name="name" placeholder="Enter your name" required><br>
 
-        <label>What is my favorite color?</label>
-        <input type="radio" name="q2" value="Red" required> Red<br>
-        <input type="radio" name="q2" value="Blue"> Blue<br>
-        <input type="radio" name="q2" value="Green"> Green<br>
+            <label>Where did we first meet?</label>
+            <input type="radio" name="q1" value="Place A" required> Place A<br>
+            <input type="radio" name="q1" value="Place B"> Place B<br>
+            <input type="radio" name="q1" value="Place C"> Place C<br>
 
-        <label>What is our special date?</label>
-        <input type="radio" name="q3" value="Feb 14" required> Feb 14<br>
-        <input type="radio" name="q3" value="March 10"> March 10<br>
-        <input type="radio" name="q3" value="Dec 25"> Dec 25<br>
+            <label>What is my favorite color?</label>
+            <input type="radio" name="q2" value="Red" required> Red<br>
+            <input type="radio" name="q2" value="Blue"> Blue<br>
+            <input type="radio" name="q2" value="Green"> Green<br>
 
-        <input type="submit" value="Submit">
-    </form>
+            <label>What is our special date?</label>
+            <input type="radio" name="q3" value="Feb 14" required> Feb 14<br>
+            <input type="radio" name="q3" value="March 10"> March 10<br>
+            <input type="radio" name="q3" value="Dec 25"> Dec 25<br>
 
-    <div id="quiz-results"></div>
+            <input type="submit" value="Submit">
+        </form>
+
+        <div id="quiz-results"></div>
+    @endsection
 
 </body>
 </html>
